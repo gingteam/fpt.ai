@@ -1,0 +1,25 @@
+{
+    "name": "gingteam/tts",
+    "description": "fpt.ai text to speech",
+    "type": "library",
+    "require": {
+        "symfony/http-client": "^5.3"
+    },
+    "require-dev": {
+        "pestphp/pest": "^1.21",
+        "phpstan/phpstan": "^1.2"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "GingTeam\\FptAi\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ging-dev",
+            "email": "thanh1101dev@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}

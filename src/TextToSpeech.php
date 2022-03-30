@@ -13,21 +13,32 @@ class TextToSpeech
 {
     public const API_URL = 'https://api.fpt.ai/hmi/tts/v5';
 
-    /** @var string[] */
+    /** @var array<array-key, mixed> */
     private array $headers;
 
     private HttpClientInterface $client;
 
-    /** @param string[] $options */
+    /**
+     * @param array{
+     *  voice?: string,
+     *  speed?: int,
+     *  format?: string,
+     *  callback_url?: string
+     * } $options
+     */
     public function __construct(string $apiKey, array $options = [])
     {
         $this->headers = ['api_key' => $apiKey] + $options;
         $this->client = HttpClient::create();
     }
 
+    /**
+     * @throws \InvalidArgumentException
+     * @throws TransportException
+     */
     public function speak(string $messages): string
     {
-        $length = strlen($messages);
+        $length = \strlen($messages);
         if ($length < 3 || $length > 5000) {
             throw new \InvalidArgumentException('The message must be between 3 and 5000 characters.');
         }
@@ -39,6 +50,7 @@ class TextToSpeech
 
         try {
             $statusCode = $response->getStatusCode();
+            /** @var string[] $content */
             $content = $response->toArray(false);
         } catch (TransportExceptionInterface $e) {
             throw new TransportException('Could not reach the remote fpt.ai server.');
